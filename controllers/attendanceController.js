@@ -105,6 +105,12 @@ const markDroppedOff = async (req, res) => {
                 message: "Only the assigned driver can update attendance."
             });
         }
+        if (trip.status !== "in-progress") {
+    return res.status(400).json({
+        success: false,
+        message: "Attendance can only be updated during an active trip."
+    });
+}
         const student = await Student.findOne({ studentID });
 
         if (!student) {
